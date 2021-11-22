@@ -1,0 +1,23 @@
+.load-more {
+  padding: 10px 8px;
+  margin: 0 auto;
+  width: 120px;
+  display: block;
+
+  border: none;
+  outline: none;
+  border-radius: 3px;
+
+  background-color: rgb(40, 84, 218);
+  color: #fff;
+  text-transform: uppercase;
+
+  &:hover,
+  &:focus {
+    box-shadow: 2px 2px 10px rgb(136, 132, 132);
+  }
+}
+
+.is-hidden {
+  display: none;
+}
