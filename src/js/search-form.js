@@ -1,120 +1,54 @@
-import axios from "axios";
 import { Notify } from "notiflix";
+import Simplelightbox from "simplelightbox";
+import 'simplelightbox/dist/simple-lightbox.min.css';
+// import InfiniteScroll from "infinite-scroll"
+import createMarkup from "./create-markup-of-galery";
+import { refs } from "./refs"
+import feachImg from "./feach-img"
+import smoothPageScrolling from "./Smooth-page-scrolling";
+import {dataOfFeachImg} from "./dataOfFeach"
+
+const gallery = new Simplelightbox('.gallery .js');
 
 
-const refs = {
-    form: document.querySelector(".search-form"),
-    input: document.querySelector(".search-form__input"),
-    bnt: document.querySelector(".search-form__btn"),
-    gallery: document.querySelector('.gallery'),
-    loadMoreBtn: document.querySelector('.load-more'),
-}
 
-const KEY = 'key=24460991-e6b86f63e9df1bcb3be279c62';
-const BASE_URL = 'https://pixabay.com/api'
-const OPTIONS = 'image_type=photo&orientation=horizontal&safesearch=true'
-const PER_PAGE = 40;
+refs.form.addEventListener("submit", async (e) => {
 
-
-let page = 1;
-let valueOfSearch = null;
-
-
-refs.form.addEventListener("submit", (e) => {
+    const currentTarget = e.currentTarget;
     e.preventDefault();
-     refs.loadMoreBtn.classList.add("is-hidden");
+    refs.loadMoreBtn.classList.add("is-hidden");
     refs.gallery.innerHTML = "";
+    dataOfFeachImg.page = 1;
 
-    const userValue = e.currentTarget.elements.searchQuery.value;
+    
+    await feachImg(currentTarget, 'searchQuery');
+    currentTarget.reset();
 
-    valueOfSearch = userValue.toLowerCase().split(' ').join('+');
+    if (dataOfFeachImg.quantityOfResponses === 0) { 
+        return Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+    } 
+        
+    await createMarkup(dataOfFeachImg.data);
+    Notify.success(`Hooray! We found ${dataOfFeachImg.quantityOfResponses} images.`);
+    gallery.refresh();
+
+
+    });
+
+
+
+refs.loadMoreBtn.addEventListener('click',  async() => {
    
-
-    
-feachImg()
-
-          
-    
-    e.currentTarget.reset();
-    page = 1;
-  
-})
-
-
-
-
-refs.loadMoreBtn.addEventListener('click', () => {
-    feachImg();
-
-})
-
-
-// data - hits [{значения }]
-
-// webformatURL - ссылка на маленькое изображение для списка карточек.
-// largeImageURL - ссылка на большое изображение.
-// tags - строка с описанием изображения. Подойдет для атрибута alt.
-// likes - количество лайков.
-// views - количество просмотров.
-// comments - количество комментариев.
-// downloads - коли
-
-
-
-    async function feachImg() {
-         
-        const feach = await axios.get(`${BASE_URL}/?${KEY}&q=${valueOfSearch}&${OPTIONS}&page=${page}&per_page=${PER_PAGE}`);
-        const response = feach.data;
-        const data =  await response.hits;
-
-
-
-        
-
-  if (response.total === 0) {
-    return  Notify.failure("Sorry, there are no images matching your search query. Please try again.");
-      
-        };
-
-        createMarkup(data)
-        refs.loadMoreBtn.classList.remove("is-hidden");
-
-
-
-        page += 1;
-        console.log("~ PAGE", page)
-       
-
+    if (dataOfFeachImg.endOfColection) {
+        refs.loadMoreBtn.classList.add("is-hidden");
+        return  Notify.failure("We're sorry, but you've reached the end of search results.");
     }
-    
+            
+    await feachImg()
+    createMarkup(dataOfFeachImg.data);
+    gallery.refresh();
 
+    smoothPageScrolling(refs.gallery)
 
-
-
-function createMarkup(array) {
-
-       const markup = array.map(({webformatURL, tags, likes, views, comments, downloads}) => {
-
-      return `<div class="photo-card">
-            <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-            <div class="info">
-                <p class="info-item">
-                    <b>Likes</b>${likes}
-                </p>
-                <p class="info-item">
-                    <b>Views</b>${views}
-                </p>
-                <p class="info-item">
-                    <b>Comments</b>${comments}
-                </p>
-                <p class="info-item">
-                    <b>Downloads</b>${downloads}
-                </p>
-            </div>
-        </div>`
-        
-    }).join("")
-     
-   return refs.gallery.insertAdjacentHTML("beforeend", markup);
-    
-}
+})
+  
