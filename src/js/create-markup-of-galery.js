@@ -1,13 +1,16 @@
-
 import { refs } from "./refs";
 
 
 export default function createMarkup(array) {
 
-       const markup = array.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => {
-      
+    if (array) {
 
-           return `<div class="photo-card"><a href="${largeImageURL}" class="js">
+        const markup =  array.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
+      
+          
+            const div = document.createElement('div');
+            div.classList.add("photo-card");
+            div.innerHTML = `<a href="${largeImageURL}" class="js">
       
             <img class="photo-card__img" src="${webformatURL}" alt="${tags}" loading="lazy" /></a>
             <div class="info">
@@ -23,13 +26,16 @@ export default function createMarkup(array) {
                 <p class="info-item">
                     <b>Downloads</b>${downloads}
                 </p>
-            </div>
-        </div>`
-        
-    }).join("")
-        
-   refs.loadMoreBtn.classList.remove("is-hidden");
+            </div>`
+                      
+            return div
+        })
 
-   return refs.gallery.insertAdjacentHTML("beforeend", markup);
-    
+
+
+        refs.gallery.append(...markup);
+
+    }
 }
+  
+    

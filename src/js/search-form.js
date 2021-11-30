@@ -1,54 +1,61 @@
 import { Notify } from "notiflix";
 import Simplelightbox from "simplelightbox";
 import 'simplelightbox/dist/simple-lightbox.min.css';
-// import InfiniteScroll from "infinite-scroll"
 import createMarkup from "./create-markup-of-galery";
-import { refs } from "./refs"
-import feachImg from "./feach-img"
+import { refs } from "./refs";
+import feachImg from "./feach-img";
 import smoothPageScrolling from "./Smooth-page-scrolling";
-import {dataOfFeachImg} from "./dataOfFeach"
+import { RESPONSE } from "./RESPONSE";
+import { infScrollInstall, infScrollLoader } from './infiniteScroll';
 
+
+const dateOfResponse = new RESPONSE(refs.form, 'searchQuery');
 const gallery = new Simplelightbox('.gallery .js');
 
+ 
+    
 
 
 refs.form.addEventListener("submit", async (e) => {
 
-    const currentTarget = e.currentTarget;
+
     e.preventDefault();
-    refs.loadMoreBtn.classList.add("is-hidden");
+    const form = e.currentTarget;
+    
+      
     refs.gallery.innerHTML = "";
-    dataOfFeachImg.page = 1;
+    dateOfResponse.reset();
+    dateOfResponse.findValueOfSearch();
+
+    await feachImg(dateOfResponse).then(({ data, quantityOfResponses }) => {
+
+        createMarkup(data);
+        return Notify.success(`Hooray! We found ${quantityOfResponses} images.`);
+
+    }).catch(error => {
+        return Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+    });
+    form.reset();
+    gallery.refresh();
+    
 
     
-    await feachImg(currentTarget, 'searchQuery');
-    currentTarget.reset();
-
-    if (dataOfFeachImg.quantityOfResponses === 0) { 
-        return Notify.failure("Sorry, there are no images matching your search query. Please try again.");
-    } 
-        
-    await createMarkup(dataOfFeachImg.data);
-    Notify.success(`Hooray! We found ${dataOfFeachImg.quantityOfResponses} images.`);
-    gallery.refresh();
 
 
+    const infScroll = infScrollInstall(refs.gallery, dateOfResponse);
+    infScroll.on('load', async function (body) {
+
+        dateOfResponse.data = await body.hits;
+        infScrollLoader(dateOfResponse)
+            .then(data => {
+                createMarkup(data);
+                smoothPageScrolling(refs.gallery);
+                gallery.refresh();
+            })
+            .catch(error => {
+                infScroll.destroy();
+                return Notify.failure("We're sorry, but you've reached the end of search results.");
+            });   
     });
+});
 
-
-
-refs.loadMoreBtn.addEventListener('click',  async() => {
-   
-    if (dataOfFeachImg.endOfColection) {
-        refs.loadMoreBtn.classList.add("is-hidden");
-        return  Notify.failure("We're sorry, but you've reached the end of search results.");
-    }
-            
-    await feachImg()
-    createMarkup(dataOfFeachImg.data);
-    gallery.refresh();
-
-    smoothPageScrolling(refs.gallery)
-
-})
-  
