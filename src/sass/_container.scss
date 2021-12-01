@@ -1,3 +1,11 @@
 .container {
   padding-bottom: 30px;
 }
+
+.page-load-status {
+  display: none; /* hidden by default */
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+  text-align: center;
+  color: #777;
+}

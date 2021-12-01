@@ -1,7 +1,6 @@
 import InfiniteScroll from "infinite-scroll";
 
 
-
 export function infScrollInstall(container, dateOfResponse) {
     
 return  new InfiniteScroll(container, {
@@ -17,16 +16,4 @@ return  new InfiniteScroll(container, {
 })
 };
 
-
-
-
-export function infScrollLoader(dateOfResponse) {
-
-    dateOfResponse.controlEndOfColection();
-      
-        if (dateOfResponse.endOfColection) {
-            return Promise.reject();
-        }
-            return Promise.resolve(dateOfResponse.data);     
- }
 

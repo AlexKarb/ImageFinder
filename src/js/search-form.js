@@ -6,7 +6,8 @@ import { refs } from "./refs";
 import feachImg from "./feach-img";
 import smoothPageScrolling from "./Smooth-page-scrolling";
 import { RESPONSE } from "./RESPONSE";
-import { infScrollInstall, infScrollLoader } from './infiniteScroll';
+import { infScrollInstall } from './infiniteScroll';
+import {upBtn} from "./сreateUpBtn";
 
 
 const dateOfResponse = new RESPONSE(refs.form, 'searchQuery');
@@ -24,6 +25,7 @@ refs.form.addEventListener("submit", async (e) => {
     
       
     refs.gallery.innerHTML = "";
+    upBtn.deleteElenent()
     dateOfResponse.reset();
     dateOfResponse.findValueOfSearch();
 
@@ -43,19 +45,21 @@ refs.form.addEventListener("submit", async (e) => {
 
 
     const infScroll = infScrollInstall(refs.gallery, dateOfResponse);
+
     infScroll.on('load', async function (body) {
 
         dateOfResponse.data = await body.hits;
-        infScrollLoader(dateOfResponse)
-            .then(data => {
-                createMarkup(data);
-                smoothPageScrolling(refs.gallery);
-                gallery.refresh();
-            })
-            .catch(error => {
-                infScroll.destroy();
-                return Notify.failure("We're sorry, but you've reached the end of search results.");
-            });   
+        createMarkup(dateOfResponse.data);
+        smoothPageScrolling(refs.gallery);
+        upBtn.createElement();
+        gallery.refresh();
+
+        dateOfResponse.controlEndOfColection();
+        if (dateOfResponse.endOfColection) {
+             infScroll.destroy();
+                return Notify.failure("We're sorry, but you've reached the end of search results."); 
+         }
+        
     });
 });
 
