@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    
-<div class="container">
-    <form class="search-form" id="search-form">
-        <input class="search-form__input" type="text" name="searchQuery" autocomplete="off" placeholder="Search images..." />
+  </head>
+  <body>
+    <div class="container">
+      <form class="search-form" id="search-form">
+        <a href="/" class="logotype"
+          ><img src="/public/osos.svg" alt="logotype" class="logotype__icon" />ImageFinder</a
+        >
+        <input
+          class="search-form__input"
+          type="text"
+          name="searchQuery"
+          autocomplete="off"
+          placeholder="Search images..."
+        />
         <button class="search-form__btn" type="submit"></button>
-    </form>
+      </form>
 
-    <div class="gallery" >
-    </div>
+      <div class="gallery"></div>
 
+      <div class="wellcome">
+        <p class="wellcome__main_text">Hello!</p>
+        <p class="wellcome__main_text">Welcome to the ImageFinder site!</p>
+        <p class="wellcome__main_text">We hope you can find the best picture for you!</p>
+        <p class="wellcome__second_text">
+          To get started, just write your request in the form and click the button to start the
+          search.
+        </p>
+        <p class="wellcome__ps">
+          Don't forget to like a good picture<span class="wellcome__ps_heart">&#9829;</span>
+        </p>
+      </div>
 
-
-
-
-    <div class="page-load-status">
+      <div class="page-load-status">
         <p class="infinite-scroll-request">Loading...</p>
         <p class="infinite-scroll-last">End of content</p>
         <p class="infinite-scroll-error">No more pages to load</p>
+      </div>
     </div>
-    
-</div>
 
-
-
-
-
-
-
- 
-<script src="../src/js/search-form.js"></script>
-
-</body>
+    <script src="../src/js/search-form.js"></script>
+  </body>
 </html>
