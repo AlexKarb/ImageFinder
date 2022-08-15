@@ -17,7 +17,8 @@ export class RESPONSE {
     this.endOfColection = false;
     this.root = `${RESPONSE.RequestData.BASE_URL}/?${RESPONSE.RequestData.KEY}&${RESPONSE.RequestData.OPTIONS}`;
     this.requestURL =
-      this.root + `&q=${this.valueOfSearch}&page=${this.page}&per_page=${this.perPage}`;
+      this.root +
+      `&q=${this.valueOfSearch || 'white+bear'}&page=${this.page}&per_page=${this.perPage}`;
   }
 
   controlEndOfColection() {
@@ -32,7 +33,7 @@ export class RESPONSE {
       this.valueOfSearch = userValue.toLowerCase().split(' ').join('+');
       this.requestURL =
         this.root +
-        `&q=${this.valueOfSearch || 'white bear'}&page=${this.page}&per_page=${this.perPage}`;
+        `&q=${this.valueOfSearch || 'white+bear'}&page=${this.page}&per_page=${this.perPage}`;
     }
   }
 
@@ -50,7 +51,8 @@ export class RESPONSE {
 
   updateRequestURL() {
     this.requestURL =
-      this.root + `&q=${this.valueOfSearch}&page=${this.page + 1}&per_page=${this.perPage}`;
+      this.root +
+      `&q=${this.valueOfSearch || 'white+bear'}&page=${this.page + 1}&per_page=${this.perPage}`;
   }
 
   reset() {
