@@ -11,18 +11,29 @@ import { upBtn } from './сreateUpBtn';
 
 const dateOfResponse = new RESPONSE(refs.form, 'searchQuery');
 const gallery = new Simplelightbox('.gallery .js');
+ImageFinder(dateOfResponse);
 
-refs.form.addEventListener('submit', async e => {
+refs.form.addEventListener('submit', formControl);
+
+function formControl(e) {
   e.preventDefault();
   const form = e.currentTarget;
 
   refs.gallery.innerHTML = '';
   upBtn.deleteElenent();
   dateOfResponse.reset();
+  refs.wellcomeEl.classList.add('visually-hidden');
+  ImageFinder(dateOfResponse);
+  form.reset();
+}
+
+export async function ImageFinder(dateOfResponse) {
+  console.log('~ dateOfResponse', dateOfResponse);
   dateOfResponse.findValueOfSearch();
 
   await feachImg(dateOfResponse)
     .then(({ data, quantityOfResponses }) => {
+      console.log('~ data', data);
       createMarkup(data);
       return Notify.success(`Hooray! We found ${quantityOfResponses} images.`);
     })
@@ -33,7 +44,7 @@ refs.form.addEventListener('submit', async e => {
         'Sorry, there are no images matching your search query. Please try again.',
       );
     });
-  form.reset();
+
   gallery.refresh();
 
   const infScroll = infScrollInstall(refs.gallery, dateOfResponse);
@@ -51,4 +62,4 @@ refs.form.addEventListener('submit', async e => {
       return Notify.failure("We're sorry, but you've reached the end of search results.");
     }
   });
-});
+}

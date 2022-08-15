@@ -28,7 +28,6 @@ export default function createMarkup(array) {
       },
     );
 
-    refs.wellcomeEl.classList.add('visually-hidden');
     refs.gallery.append(...markup);
   }
 }
