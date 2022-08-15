@@ -23,22 +23,37 @@
   .photo-card__like {
     position: absolute;
     display: block;
+    width: 28px;
+    height: 24px;
     right: 10px;
+    top: 10px;
     font-size: 35px;
-    color: white;
+    fill: white;
+    stroke: none;
     z-index: 100;
     cursor: pointer;
+    transition: all 0.1s;
 
     &.active {
-      color: rgba(40, 84, 218, 0.993);
+      fill: rgba(40, 84, 218, 0.993);
+      stroke: none;
 
       &:hover {
-        text-shadow: 3px 4px 11px white;
+        fill: #ffffff6e;
+        stroke: rgb(64 102 218 / 90%);
+        stroke-width: 3px;
       }
     }
 
     &:hover {
-      text-shadow: 3px 4px 11px rgba(40, 84, 218, 0.993);
+      fill: rgb(64 102 218 / 90%);
+      stroke: #ffffff6e;
+      stroke-width: 3px;
+    }
+
+    &:active {
+      fill: rgba(40, 84, 218, 0.993);
+      stroke: none;
     }
   }
 }

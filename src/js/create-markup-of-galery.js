@@ -1,4 +1,5 @@
 import { refs } from './refs';
+import icon from '../public/heart.svg';
 
 export default function createMarkup(array) {
   if (array) {
@@ -6,7 +7,7 @@ export default function createMarkup(array) {
       ({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
         const div = document.createElement('div');
         div.classList.add('photo-card');
-        div.innerHTML = `<span  class="photo-card__like" >&#9829;</span>
+        div.innerHTML = `<svg  class="photo-card__like" > <use href='${icon}#heart' /> </svg>
         <a href="${largeImageURL}" class="js">
           <img class="photo-card__img" src="${webformatURL}" alt="${tags}" loading="lazy" /></a>
             <div class="info">
