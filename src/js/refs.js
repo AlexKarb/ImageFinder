@@ -6,4 +6,5 @@ export const refs = {
   loadMoreBtn: document.querySelector('.load-more'),
   wellcomeEl: document.querySelector('.wellcome'),
   logotype: document.querySelector('.logotype'),
+  like: document.querySelector('.photo-card__like'),
 };

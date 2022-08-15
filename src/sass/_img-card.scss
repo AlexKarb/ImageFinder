@@ -5,6 +5,7 @@
 }
 
 .photo-card {
+  position: relative;
   border: 1px solid rgb(224, 214, 214);
   box-shadow: 1px 1px 6px rgb(224, 214, 214);
   border-radius: 5px;
@@ -18,6 +19,28 @@
     object-fit: cover;
     object-position: center;
   }
+
+  .photo-card__like {
+    position: absolute;
+    display: block;
+    right: 10px;
+    font-size: 35px;
+    color: white;
+    z-index: 100;
+    cursor: pointer;
+
+    &.active {
+      color: rgba(40, 84, 218, 0.993);
+
+      &:hover {
+        text-shadow: 3px 4px 11px white;
+      }
+    }
+
+    &:hover {
+      text-shadow: 3px 4px 11px rgba(40, 84, 218, 0.993);
+    }
+  }
 }
 
 .info {
@@ -25,6 +48,9 @@
 }
 
 .info-item {
+  display: flex;
+  flex-direction: column-reverse;
+
   & > b {
     margin-right: 10px;
   }

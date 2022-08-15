@@ -8,6 +8,7 @@ import smoothPageScrolling from './Smooth-page-scrolling';
 import { RESPONSE } from './RESPONSE';
 import { infScrollInstall } from './infiniteScroll';
 import { upBtn } from './сreateUpBtn';
+import { lisnerPhotoLikes } from './likeClick';
 
 const dateOfResponse = new RESPONSE(refs.form, 'searchQuery');
 const gallery = new Simplelightbox('.gallery .js');
@@ -28,16 +29,16 @@ function formControl(e) {
 }
 
 export async function ImageFinder(dateOfResponse) {
-  console.log('~ dateOfResponse', dateOfResponse);
   dateOfResponse.findValueOfSearch();
 
   await feachImg(dateOfResponse)
     .then(({ data, quantityOfResponses }) => {
-      console.log('~ data', data);
       createMarkup(data);
+      lisnerPhotoLikes();
       return Notify.success(`Hooray! We found ${quantityOfResponses} images.`);
     })
     .catch(error => {
+      console.log('~ error', error);
       if (refs.wellcomeEl.classList.contains('visually-hidden'))
         refs.wellcomeEl.classList.remove('visually-hidden');
       return Notify.failure(
