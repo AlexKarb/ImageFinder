@@ -50,6 +50,20 @@
       stroke: #ffffff6e;
       stroke-width: 3px;
     }
+
+    @media screen and (max-width: 768px) {
+      &:hover {
+        fill: white;
+        stroke: none;
+      }
+
+      &.active {
+        &:hover {
+          fill: rgb(64 102 218 / 90%);
+          stroke: none;
+        }
+      }
+    }
   }
 }
 
