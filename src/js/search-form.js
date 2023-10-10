@@ -55,13 +55,18 @@ export async function ImageFinder(dateOfResponse) {
     });
   gallery.refresh();
   const infScroll = infScrollInstall(refs.gallery, dateOfResponse);
+  console.log('infScroll:', infScroll);
   infScroll.on('load', async function (body) {
+    console.log('dateOfResponse:', dateOfResponse);
+    console.log('body:', body);
     dateOfResponse.data = await body.hits;
+    console.log(' dateOfResponse.data:', dateOfResponse.data);
     createMarkup(dateOfResponse.data);
     smoothPageScrolling(refs.gallery);
     upBtn.createElement();
     gallery.refresh();
     dateOfResponse.controlEndOfColection();
+    console.log('dateOfResponse.controlEndOfColection();:', dateOfResponse.controlEndOfColection());
     if (dateOfResponse.endOfColection) {
       infScroll.destroy();
       return Notify.failure("We're sorry, but you've reached the end of search results.");

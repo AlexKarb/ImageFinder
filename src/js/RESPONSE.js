@@ -20,9 +20,9 @@ export class RESPONSE {
       `&q=${this.valueOfSearch || 'white+bear'}&page=${this.page}&per_page=${this.perPage}`;
   }
   controlEndOfColection() {
-    this.endOfColection =
+    return (this.endOfColection =
       Math.ceil(this.quantityOfResponses / this.perPage) === this.page ||
-      Math.round(this.quantityOfResponses / this.perPage) === 0;
+      Math.round(this.quantityOfResponses / this.perPage) === 0);
   }
   findValueOfSearch() {
     if (this.refsForm || this.htmlNameOfSearchInput) {
