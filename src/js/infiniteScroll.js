@@ -8,7 +8,7 @@ export function infScrollInstall(container, dateOfResponse) {
     },
     responseBody: 'json',
     history: false,
-    append: '.photo-card',
-    status: '.page-load-status',
+    // append: '.photo-card',
+    // status: '.page-load-status',
   });
 }
