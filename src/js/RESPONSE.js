@@ -9,7 +9,7 @@ export class RESPONSE {
     this.refsForm = form;
     this.htmlNameOfSearchInput = nameOfInput;
     this.valueOfSearch = '';
-    this.data = {};
+    this.data = [];
     this.quantityOfResponses = undefined;
     this.page = 1;
     this.perPage = RESPONSE.RequestData.PER_PAGE;
@@ -20,9 +20,10 @@ export class RESPONSE {
       `&q=${this.valueOfSearch || 'white+bear'}&page=${this.page}&per_page=${this.perPage}`;
   }
   controlEndOfColection() {
-    return (this.endOfColection =
+    this.endOfColection =
       Math.ceil(this.quantityOfResponses / this.perPage) === this.page ||
-      Math.round(this.quantityOfResponses / this.perPage) === 0);
+      Math.round(this.quantityOfResponses / this.perPage) === 0;
+    return this.endOfColection;
   }
   findValueOfSearch() {
     if (this.refsForm || this.htmlNameOfSearchInput) {
