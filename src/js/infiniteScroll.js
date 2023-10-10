@@ -1,19 +1,14 @@
-import InfiniteScroll from "infinite-scroll";
-
-
+import InfiniteScroll from 'infinite-scroll';
 export function infScrollInstall(container, dateOfResponse) {
-    
-return  new InfiniteScroll(container, {
-
+  return new InfiniteScroll(container, {
     path: function () {
-        
-        dateOfResponse.page = this.pageIndex;
-        dateOfResponse.updateRequestURL();
-        return `${dateOfResponse.requestURL}`;
+      dateOfResponse.page = this.pageIndex;
+      dateOfResponse.updateRequestURL();
+      return `${dateOfResponse.requestURL}`;
     },
-     responseBody: 'json',
-     history: false,
-})
-};
-
-
+    responseBody: 'json',
+    history: false,
+    append: '.photo-card',
+    status: '.page-load-status',
+  });
+}

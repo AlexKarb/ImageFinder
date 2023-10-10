@@ -5,7 +5,6 @@ export class RESPONSE {
     OPTIONS: 'image_type=photo&orientation=horizontal&safesearch=true',
     PER_PAGE: 40,
   };
-
   constructor(form, nameOfInput) {
     this.refsForm = form;
     this.htmlNameOfSearchInput = nameOfInput;
@@ -20,13 +19,11 @@ export class RESPONSE {
       this.root +
       `&q=${this.valueOfSearch || 'white+bear'}&page=${this.page}&per_page=${this.perPage}`;
   }
-
   controlEndOfColection() {
     this.endOfColection =
       Math.ceil(this.quantityOfResponses / this.perPage) === this.page ||
       Math.round(this.quantityOfResponses / this.perPage) === 0;
   }
-
   findValueOfSearch() {
     if (this.refsForm || this.htmlNameOfSearchInput) {
       const userValue = this.refsForm.elements[this.htmlNameOfSearchInput].value;
@@ -36,11 +33,9 @@ export class RESPONSE {
         `&q=${this.valueOfSearch || 'white+bear'}&page=${this.page}&per_page=${this.perPage}`;
     }
   }
-
   updateAllValues(obj = {}) {
     const receivedKeys = Object.keys(obj);
     const receivedValues = Object.values(obj);
-
     for (let key in this) {
       if (receivedKeys.includes(key)) {
         const index = receivedKeys.indexOf(key);
@@ -48,13 +43,11 @@ export class RESPONSE {
       }
     }
   }
-
   updateRequestURL() {
     this.requestURL =
       this.root +
       `&q=${this.valueOfSearch || 'white+bear'}&page=${this.page + 1}&per_page=${this.perPage}`;
   }
-
   reset() {
     this.page = 1;
   }

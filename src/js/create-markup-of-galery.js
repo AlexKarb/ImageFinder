@@ -1,6 +1,5 @@
 import { refs } from './refs';
-import icon from '../public/heart.svg';
-
+import icon from '../public/sprite.svg';
 export default function createMarkup(array) {
   if (array) {
     const markup = array.map(
@@ -28,11 +27,9 @@ export default function createMarkup(array) {
                     <span>${downloads}</span>
                 </p>
             </div>`;
-
         return div;
       },
     );
-
     refs.gallery.append(...markup);
   }
 }

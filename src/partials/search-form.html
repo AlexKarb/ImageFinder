@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ImageFinder</title>
   </head>
+
   <body>
     <div class="container">
       <form class="search-form" id="search-form">
@@ -14,35 +15,43 @@
         >
         <input
           class="search-form__input"
+          id="search-form__input"
           type="text"
           name="searchQuery"
           autocomplete="off"
           placeholder="Search images..."
         />
-        <button class="search-form__btn" type="submit"></button>
+
+        <button class="search-form__btn" type="submit">
+          <svg class="search-form__icon"><use href="/public/sprite.svg#find" /></svg>
+        </button>
       </form>
 
       <div class="wellcome">
-        <p class="wellcome__main_text">Hello!</p>
-        <p class="wellcome__main_text">Welcome to the ImageFinder site!</p>
-        <p class="wellcome__main_text">We hope you can find the best picture for you!</p>
+        <p class="wellcome__main_text">Welcome to the ImageFinder!</p>
+
         <p class="wellcome__second_text">
           To get started, just write your request in the form and click the button to start the
           search.
         </p>
-        <p class="wellcome__ps">
-          Don't forget to like a good picture
-          <svg class="wellcome__ps_heart"><use href="/public/heart.svg#heart" /></svg>
-        </p>
+        <button type="button" class="wellcome__btn" id="try_btn">
+          Try it FREE!
+          <svg class="wellcome__btn_heart"><use href="/public/sprite.svg#heart" /></svg>
+        </button>
       </div>
 
       <div class="gallery"></div>
+    </div>
 
-      <div class="page-load-status">
-        <p class="infinite-scroll-request">Loading...</p>
-        <p class="infinite-scroll-last">End of content</p>
-        <p class="infinite-scroll-error">No more pages to load</p>
+    <div class="page-load-status">
+      <div class="loader-ellips infinite-scroll-request">
+        <span class="loader-ellips__dot"></span>
+        <span class="loader-ellips__dot"></span>
+        <span class="loader-ellips__dot"></span>
+        <span class="loader-ellips__dot"></span>
       </div>
+      <p class="infinite-scroll-last">End of content</p>
+      <p class="infinite-scroll-error">No more pages to load</p>
     </div>
 
     <script src="../src/js/search-form.js"></script>
